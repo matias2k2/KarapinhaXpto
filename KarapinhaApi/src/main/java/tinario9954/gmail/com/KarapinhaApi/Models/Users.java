@@ -43,7 +43,7 @@ public class Users implements UserDetails, Serializable {
     private String password;
     // Garatir que o usuario venha sempre como seu perfil
     @ManyToMany(fetch = FetchType.EAGER)
-     @JoinTable(name = "tb_user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "tb_user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     public Users(Long id, String firstName, String lastName, String email, String telephone, String image,
@@ -58,7 +58,8 @@ public class Users implements UserDetails, Serializable {
         this.password = password;
     }
 
-    public Users(){}
+    public Users() {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -94,7 +95,5 @@ public class Users implements UserDetails, Serializable {
     public boolean isEnabled() {
         return true; // Retornar true se a conta estiver ativa
     }
-
-
 
 }

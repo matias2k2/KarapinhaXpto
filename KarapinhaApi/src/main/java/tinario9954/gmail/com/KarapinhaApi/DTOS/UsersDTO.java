@@ -18,7 +18,8 @@ public class UsersDTO {
     private String image;
     private String Username;
     private String password;
-    private Set<RoleDTO> rolesDTO= new HashSet<>();   
+    private Set<RoleDTOS> rolesDTO = new HashSet<>();
+
     public UsersDTO(Long id, String firstName, String lastName, String email, String telephone, String image,
             String username, String password) {
         this.id = id;
@@ -30,7 +31,7 @@ public class UsersDTO {
         Username = username;
         this.password = password;
     }
-    
+
     public UsersDTO(Users entity) {
         this.id = entity.getId();
         this.firstName = entity.getFirstName();
@@ -42,6 +43,5 @@ public class UsersDTO {
         this.password = entity.getPassword();
         entity.getRoles().forEach(x -> this.rolesDTO.add(new RoleDTOS(x)));
     }
-
 
 }

@@ -94,11 +94,6 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.7.0</version> <!-- Verifique a versão mais recente no Maven -->
-		</dependency>
 	</dependencies>
 
 	<build>
