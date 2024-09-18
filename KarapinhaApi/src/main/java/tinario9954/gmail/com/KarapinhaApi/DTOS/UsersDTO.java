@@ -1,5 +1,6 @@
 package tinario9954.gmail.com.KarapinhaApi.DTOS;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,23 +12,26 @@ import tinario9954.gmail.com.KarapinhaApi.Models.Users;
 
 @Getter
 @Setter
-public class UsersDTO {
+public class UsersDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private Long id;
-    @NotBlank(message = "campo obrigatorio")
+    @NotBlank(message = "campo obrigatório")
     private String firstName;
-    @NotBlank(message = "campo obrigatorio")
+    @NotBlank(message = "campo obrigatório")
     private String lastName;
-    @Email(message = "deve ser um emal valido")
+    @Email(message = "deve ser um email válido")
     private String email;
-    @NotBlank(message = "campo obrigatorio")
+    @NotBlank(message = "campo obrigatório")
     private String telephone;
     private String image;
-    private String Username;
+    private String usernames; // Corrigido para "username" com letra minúscula
     private String password;
     private Set<RoleDTOS> rolesDTO = new HashSet<>();
 
-    public UsersDTO(){}
-    
+    public UsersDTO() {
+    }
+
     public UsersDTO(Users entity) {
         this.id = entity.getId();
         this.firstName = entity.getFirstName();
@@ -35,7 +39,7 @@ public class UsersDTO {
         this.email = entity.getEmail();
         this.telephone = entity.getTelephone();
         this.image = entity.getImage();
-        Username = entity.getUsername();
+        this.usernames = entity.getUsername(); 
         this.password = entity.getPassword();
         entity.getRoles().forEach(x -> this.rolesDTO.add(new RoleDTOS(x)));
     }
@@ -48,9 +52,7 @@ public class UsersDTO {
         this.email = email;
         this.telephone = telephone;
         this.image = image;
-        Username = username;
+        this.usernames = username; // Corrigido aqui também
         this.password = password;
     }
-
-    
 }

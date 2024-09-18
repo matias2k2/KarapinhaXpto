@@ -1,34 +1,57 @@
 package tinario9954.gmail.com.KarapinhaApi.Models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.persistence.Entity;
+import org.hibernate.annotations.ManyToAny;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "tb_role")
-public class Role implements Serializable {
+@Table(name = "Products")
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String authority;
-    
-    public Role() {
+    private String name;
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    private Double price;
+    private String img;
+
+    @ManyToAny
+    @JoinTable(
+        name = "TB_Products_Categotias", 
+        joinColumns = @JoinColumn(name = "product_id"), 
+        inverseJoinColumns = @JoinColumn(name = "categoru_id")
+        )
+    Set<Category> categorias = new HashSet<>();
+
+    public Double getPrice() {
+        return price;
     }
 
-    public Role(Long id, String authority) {
-        super();
+    public Product(Long id, String name, String description, Double price, String img) {
         this.id = id;
-        this.authority = authority;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.img = img;
+    }
+
+    public Product() {
     }
 
     @Override
@@ -47,7 +70,7 @@ public class Role implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Role other = (Role) obj;
+        Product other = (Product) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -55,4 +78,5 @@ public class Role implements Serializable {
             return false;
         return true;
     }
+
 }

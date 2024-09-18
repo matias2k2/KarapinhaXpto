@@ -1,34 +1,31 @@
 package tinario9954.gmail.com.KarapinhaApi.Models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-@Entity
-@Table(name = "tb_role")
-public class Role implements Serializable {
+@Getter
+@Table(name = "Category")
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String authority;
-    
-    public Role() {
-    }
+    private String name;
 
-    public Role(Long id, String authority) {
-        super();
+    @ManyToMany(mappedBy = "categorias")
+    private Set<Product> produtos = new HashSet<>();
+
+    public Category(){}
+
+    public Category(Long id, String name) {
         this.id = id;
-        this.authority = authority;
+        this.name = name;
     }
 
     @Override
@@ -47,7 +44,7 @@ public class Role implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Role other = (Role) obj;
+        Category other = (Category) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -55,4 +52,7 @@ public class Role implements Serializable {
             return false;
         return true;
     }
+    
+
+    
 }

@@ -8,13 +8,10 @@ import tinario9954.gmail.com.KarapinhaApi.security.valid.UserInsertValid;
 @Setter
 @UserInsertValid
 public class UserInsertDTO extends UsersDTO {
-
     private static final long serialVersionUID = 1L;
-
     private String password;
 
     UserInsertDTO() {
         super();
     }
-
 }

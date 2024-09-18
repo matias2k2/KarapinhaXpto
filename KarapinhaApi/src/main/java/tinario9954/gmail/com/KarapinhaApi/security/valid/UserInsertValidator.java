@@ -10,7 +10,6 @@ import jakarta.validation.ConstraintValidatorContext;
 import tinario9954.gmail.com.KarapinhaApi.DTOS.UserInsertDTO;
 import tinario9954.gmail.com.KarapinhaApi.Repository.UserRepository;
 
-
 public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {
     @Autowired
     private UserRepository userRepository;
@@ -24,6 +23,10 @@ public class UserInsertValidator implements ConstraintValidator<UserInsertValid,
 
         // Exemplo de validação: verificar se o e-mail já está em uso
         List<FieldMessage> list = new ArrayList<>();
+
+        if (dto.getPassword() == null || dto.getPassword().isEmpty()) {
+            list.add(new FieldMessage("password", "Password cannot be null or empty"));
+        }
 
         if (userRepository.existsByEmail(dto.getEmail())) {
             list.add(new FieldMessage("email", "Email já está em uso"));

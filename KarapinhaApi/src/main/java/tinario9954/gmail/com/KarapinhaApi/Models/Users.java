@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -39,7 +40,7 @@ public class Users implements UserDetails, Serializable {
     private String email;
     private String telephone;
     private String image;
-    private String username;
+    private String usernames;
     private String password;
     // Garatir que o usuario venha sempre como seu perfil
     @ManyToMany(fetch = FetchType.EAGER)
@@ -54,7 +55,7 @@ public class Users implements UserDetails, Serializable {
         this.email = email;
         this.telephone = telephone;
         this.image = image;
-        this.username = username;
+        this.usernames = username;
         this.password = password;
     }
 
@@ -94,6 +95,31 @@ public class Users implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true; // Retornar true se a conta estiver ativa
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Users other = (Users) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
 
 }
