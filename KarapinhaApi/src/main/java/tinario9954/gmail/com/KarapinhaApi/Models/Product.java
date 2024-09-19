@@ -4,44 +4,46 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "Products")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     @Column(columnDefinition = "TEXT")
     private String description;
+
     private Double price;
+
     private String img;
 
-    @ManyToAny
+    @ManyToMany
     @JoinTable(
-        name = "TB_Products_Categotias", 
+        name = "TB_Products_Categories", 
         joinColumns = @JoinColumn(name = "product_id"), 
-        inverseJoinColumns = @JoinColumn(name = "categoru_id")
-        )
-    Set<Category> categorias = new HashSet<>();
-
-    public Double getPrice() {
-        return price;
-    }
+        inverseJoinColumns = @JoinColumn(name = "category_id")                                                                                                               
+    )
+    private Set<Category> categorias = new HashSet<>();
 
     public Product(Long id, String name, String description, Double price, String img) {
         this.id = id;
@@ -78,5 +80,4 @@ public class Product implements Serializable {
             return false;
         return true;
     }
-
 }
