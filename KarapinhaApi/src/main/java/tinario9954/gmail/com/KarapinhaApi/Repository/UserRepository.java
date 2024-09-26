@@ -8,6 +8,6 @@ import tinario9954.gmail.com.KarapinhaApi.Models.Users;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Long> {
-    boolean existsByEmail(String email);
-    Optional<Users> findByEmail(String email);
+    //boolean existsByEmail(String email);
+    //Optional<Users> findByEmail(String email);
 }
