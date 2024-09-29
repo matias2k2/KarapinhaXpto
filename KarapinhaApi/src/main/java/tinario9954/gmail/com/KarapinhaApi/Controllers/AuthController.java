@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tinario9954.gmail.com.KarapinhaApi.DTOS.LoginUserDTO;
 import tinario9954.gmail.com.KarapinhaApi.Models.Users;
+import tinario9954.gmail.com.KarapinhaApi.Services.tokenService;
 
 @RestController
 public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private tokenService tokenService; // Corrigi o nome da classe para seguir a convenção de nomenclatura Java
 
     @PostMapping("/login")
     public String login(@RequestBody LoginUserDTO login) {
@@ -24,12 +28,11 @@ public class AuthController {
                     login.getEmail(), login.getPassaword());
 
             Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-            var users = (Users) authenticate.getPrincipal();
+            Users users = (Users) authenticate.getPrincipal();
 
-            return "Login bem-sucedido!";
+            return tokenService.gerarToken(users);
         } catch (Exception e) {
             return "Falha no login! " + e.getMessage();
         }
     }
-
 }

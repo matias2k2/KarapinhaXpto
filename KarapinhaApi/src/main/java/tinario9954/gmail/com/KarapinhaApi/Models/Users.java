@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,10 +19,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Entity // Adicione essa anotação
 @Table(name = "users")
 public class Users implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,6 +50,7 @@ public class Users implements UserDetails, Serializable {
         return email;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
