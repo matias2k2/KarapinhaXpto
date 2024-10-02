@@ -1,6 +1,8 @@
 package tinario9954.gmail.com.KarapinhaApi.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,17 +24,22 @@ public class AuthController {
     private tokenService tokenService; // Corrigi o nome da classe para seguir a convenção de nomenclatura Java
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginUserDTO login) {
+    public ResponseEntity<String> login(@RequestBody LoginUserDTO login) {
         try {
+            // Aqui o campo "password" já está corrigido
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    login.getEmail(), login.getPassaword());
+                    login.getEmail(), login.getPassword()); // Use "getPassword" e não "getPassaword"
 
+            // Autenticar o usuário
             Authentication authenticate = authenticationManager.authenticate(authenticationToken);
             Users users = (Users) authenticate.getPrincipal();
 
-            return tokenService.gerarToken(users);
+            // Gerar o token JWT e retornar
+            String token = tokenService.gerarToken(users);
+            return ResponseEntity.ok(token);
         } catch (Exception e) {
-            return "Falha no login! " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Falha no login: " + e.getMessage());
         }
     }
+
 }
